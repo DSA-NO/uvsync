@@ -4,13 +4,19 @@ import os, sys, importlib
 from pathlib import Path
 
 class UVSyncContextException(Exception):
-    ''' '''
+    ''' 
+    Exception class used to report UVSyncContext speciffic errors
+    '''
     pass
 
 class UVSyncContext():
-    ''' '''
+    ''' 
+    Define a class used to hold all relevant information needed to synchronize a speciffic instrument
+    '''
     def __init__(self, instrument, uvsync_directory):
-        ''' '''   
+        ''' 
+        Constructor, initialize all member variables
+        '''   
         self.instrument_id = int(instrument.instrument_id)
         self.station_id = int(instrument.station_id)
         if not instrument.instrument_name:
@@ -48,6 +54,7 @@ class UVSyncContext():
         if self.match_expression is None:
             raise UVSyncContextException("Invalid match expression for instrument " + self.instrument_name)
 
+        # Declare variables for all uvsync directories, and create them if they don't exist already
         self.directory_inbox = Path(uvsync_directory) / "inbox"
         self.directory_work = Path(uvsync_directory) / "work"
         self.directory_outbox = Path(uvsync_directory) / "outbox"
@@ -58,8 +65,11 @@ class UVSyncContext():
         os.makedirs(self.directory_outbox, exist_ok = True)
         os.makedirs(self.directory_failed, exist_ok = True)
             
-        self.sync_files = []    
+        # List of files to store in the database, this list is filled by the validate module
+        self.sync_files = []
 
     def get_module(self, module_name):        
-        ''' '''        
+        ''' 
+        Function used to load the fetch, validate and store modules for each instrument
+        '''        
         return sys.modules[module_name] if module_name in sys.modules else importlib.import_module("lib." + module_name)

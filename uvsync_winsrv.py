@@ -16,7 +16,10 @@ class UVSyncWinSrv(WinSrv):
     _svc_description_ = "Synchronization of UVNet station data"
 
     def start(self):
-        ''' '''
+        ''' 
+        Executed when the service is started.
+        Reading parameters from registry
+        '''
         d = get_registry_value(_registry_path, "bindir")
         if d is None:
             servicemanager.LogMsg(servicemanager.EVENTLOG_ERROR_TYPE, 0xF000, ('UVSync: Unable to get registry key: bindir', ''))
@@ -33,16 +36,25 @@ class UVSyncWinSrv(WinSrv):
         servicemanager.LogMsg(servicemanager.EVENTLOG_INFORMATION_TYPE, 0xF000, ('UVSync starting', ''))
 
     def stop(self):
-        ''' '''
+        ''' 
+        Executed when the service is stopped.
+        Indicate that the sync loop should stop
+        '''
         servicemanager.LogMsg(servicemanager.EVENTLOG_INFORMATION_TYPE, 0xF000, ('UVSync stopping', ''))
         self.isrunning = False
 
     def main(self):
-        ''' '''
+        ''' 
+        The service main function.
+        Run uvftp.py and uvsync.py repeatedly whenever 'sync_frequency' seconds has passed.
+        Default value for sync_frequency is 1 hour
+        '''
         try:
             while self.isrunning:
+                # Start timer
                 start_time = datetime.datetime.now()
                 try:
+                    # Run uvftp.py to download all UV log files
                     uvftp = self.bindir / "uvftp.py"
                     cp = subprocess.run(["python.exe", str(uvftp)])                
                     if cp.returncode == 0:
@@ -55,6 +67,7 @@ class UVSyncWinSrv(WinSrv):
                     servicemanager.LogMsg(servicemanager.EVENTLOG_ERROR_TYPE, 0xF000, ('UVFTP failed to run: ' + str(ex), ''))
 
                 try:                    
+                    # Run uvsync.py to verify and store downloaded UV log files
                     uvsync = self.bindir / "uvsync.py"
                     cp = subprocess.run(["python.exe", str(uvsync)])                
                     if cp.returncode == 0:
@@ -67,13 +80,15 @@ class UVSyncWinSrv(WinSrv):
                 except Exception as ex:
                     servicemanager.LogMsg(servicemanager.EVENTLOG_ERROR_TYPE, 0xF000, ('UVSync failed to run: ' + str(ex), ''))
                 
+                # Calculate remaining time
                 end_time = datetime.datetime.now()
                 delta = (end_time - start_time)
                 sleep_sub = delta.total_seconds()                         
                 sleep_time = self.sync_frequency - int(sleep_sub)
                 if sleep_time < 0:
                     sleep_time = 0
-                #servicemanager.LogMsg(servicemanager.EVENTLOG_INFORMATION_TYPE, 0xF000, ('Sleeping for ' + str(sleep_time), ''))                
+
+                # Go to sleep until sync_frequency has passed, or service is stopped
                 if win32event.WaitForSingleObject(self.hWaitStop, sleep_time * 1000) == win32event.WAIT_OBJECT_0: 
                     break
 

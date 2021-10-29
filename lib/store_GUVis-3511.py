@@ -7,7 +7,11 @@ from shutil import move
 _log = logging.getLogger("uvsync")
 
 def store(ctx, connection_string):
-    ''' '''          
+    '''
+    Function used to read and store data in downloaded UV log files for a speciffic instrument.
+    The instrument and station info is stored in the ctx (UVSyncContext) parameter.
+    See store_GUVis-3511_bs.py for more comments
+    '''          
     connection = None
 
     try:        

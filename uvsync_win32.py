@@ -36,6 +36,9 @@ from winreg import CreateKey, OpenKey, CloseKey, SetValueEx, QueryValueEx, HKEY_
             CloseHandle(self.handle) '''
         
 def has_exclusive_access(filename):
+    '''
+    Check if we have exclusive access to a file
+    '''
     try:
         handle = CreateFile(str(filename), GENERIC_READ | GENERIC_WRITE, 0, None, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, None)
         CloseHandle(handle)
@@ -44,6 +47,9 @@ def has_exclusive_access(filename):
     return True
 
 def set_registry_value_sz(regpath, name, value):
+    '''
+    Write a registry parameter
+    '''
     try:
         CreateKey(HKEY_LOCAL_MACHINE, regpath)
         registry_key = OpenKey(HKEY_LOCAL_MACHINE, regpath, 0, KEY_WRITE)
@@ -54,6 +60,9 @@ def set_registry_value_sz(regpath, name, value):
         return False
 
 def get_registry_value(regpath, name):
+    '''
+    Read a registry parameter
+    '''
     try:
         registry_key = OpenKey(HKEY_LOCAL_MACHINE, regpath, 0, KEY_READ)
         value, regtype = QueryValueEx(registry_key, name)

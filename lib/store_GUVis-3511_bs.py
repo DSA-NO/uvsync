@@ -87,9 +87,10 @@ def store_file_fast(connection, fd, ctx):
                 row[18], row[19], row[20], row[21], row[22], row[23], row[24], row[25], row[26], row[30], row[29])
             sqlparams.append(t)
 
-    cursor = connection.cursor()
-    cursor.fast_executemany = True
-    cursor.executemany('exec insert_measurement2 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', sqlparams)
+    if len(sqlparams):
+        cursor = connection.cursor()
+        cursor.fast_executemany = True
+        cursor.executemany('exec insert_measurement2 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', sqlparams)
 
     _log.info("A total of %d lines processed" % (line_count-1))
     _log.info("A total of %d lines inserted/updated" % (len(sqlparams)))

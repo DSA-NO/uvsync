@@ -7,9 +7,9 @@ from uvsync_win32 import has_exclusive_access
 _log = logging.getLogger("uvsync")
 
 def fetch(ctx):
-    ''' 
-    Copy files from directory_inbox to directory_work filtered on expression match_expression
-    '''    
+    
+    # Copy files from directory_inbox to directory_work filtered on expression match_expression
+    
     _log.info("Processing directory " + str(ctx.directory_inbox) + " with expression " + ctx.match_expression)
     
     # Get list of files in inbox for this instrument

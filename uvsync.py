@@ -12,9 +12,9 @@ _registry_path = r"SOFTWARE\uvsync"
 class ExitStatus: Success, Running, Error = range(3)
 
 def main(log):
-    ''' 
-    Main function for verifying and storing downloaded UV log files in the database
-    '''        
+    
+    # Main function for verifying and storing downloaded UV log files in the database
+    
     try:                            
         log.info("=========== START UVSYNC ===========")                 
 
@@ -65,12 +65,12 @@ def main(log):
     return ExitStatus.Success
     
 if __name__ == '__main__':
-    ''' '''    
-    ''' singleton = ApplicationSingleton('Global\\03e0118e-b38b-4171-be9a-f92dc94abd20') '''
+    
+    # singleton = ApplicationSingleton('Global\\03e0118e-b38b-4171-be9a-f92dc94abd20') '''
     try:        
-        '''if not singleton.aquire():
-            print("uvsync already running, exiting...")
-            sys.exit(ExitStatus.Running) '''
+        #if not singleton.aquire():
+        #    print("uvsync already running, exiting...")
+        #    sys.exit(ExitStatus.Running)
 
         log = uvsync_log.create_log("uvsync")   
         exit_status = main(log)
@@ -78,5 +78,5 @@ if __name__ == '__main__':
         
     except Exception as ex:            
         print(str(ex))
-    '''finally:
-        singleton.release()'''
+    # finally:
+        singleton.release()

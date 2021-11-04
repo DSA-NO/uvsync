@@ -4,19 +4,18 @@ import os, sys, importlib
 from pathlib import Path
 
 class UVSyncContextException(Exception):
-    ''' 
-    Exception class used to report UVSyncContext speciffic errors
-    '''
+    
+    # Exception class used to report UVSyncContext speciffic errors    
     pass
 
 class UVSyncContext():
-    ''' 
-    Define a class used to hold all relevant information needed to synchronize a speciffic instrument
-    '''
+    
+    # Define a class used to hold all relevant information needed to synchronize a speciffic instrument
+    
     def __init__(self, instrument, uvsync_directory):
-        ''' 
-        Constructor, initialize all member variables
-        '''   
+        
+        # Constructor, initialize all member variables
+        
         self.instrument_id = int(instrument.instrument_id)
         self.station_id = int(instrument.station_id)
         if not instrument.instrument_name:
@@ -69,7 +68,7 @@ class UVSyncContext():
         self.sync_files = []
 
     def get_module(self, module_name):        
-        ''' 
-        Function used to load the fetch, validate and store modules for each instrument
-        '''        
+
+        # Function used to load the fetch, validate and store modules for each instrument
+
         return sys.modules[module_name] if module_name in sys.modules else importlib.import_module("lib." + module_name)

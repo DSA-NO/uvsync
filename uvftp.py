@@ -13,10 +13,10 @@ _registry_path = r"SOFTWARE\uvsync"
 # Exit codes for this program
 class ExitStatus: Success, Running, Error = range(3)
 
-def main(log):
-    '''
-    Main function for downloading UV log files from the stations
-    '''                    
+def main(log):    
+
+    # Main function for downloading UV log files from the stations
+    
     try:             
         log.info("=========== START UVFTP ===========") 
         
@@ -65,9 +65,9 @@ def main(log):
     return ExitStatus.Success
 
 def handle_station(log, station, currdate):
-    '''
-    Function used to download UV log files from a speciffic station
-    '''
+    
+    # Function used to download UV log files from a speciffic station
+    
     try:
         log.info("Retrieving files for station %s" % station.label)
         log.info("Logging in to host %s as %s" % (station.ftp_host, station.ftp_user))
@@ -95,9 +95,9 @@ def handle_station(log, station, currdate):
         log.error(str(ex), exc_info=True) 
 
 def handle_file(log, ftp, file, currdate):
-    '''
-    Function used to download a speciffic UV log file from a speciffic station
-    '''
+    
+    # Function used to download a speciffic UV log file from a speciffic station
+    
     try:
         log.info("Transfering remote file %s" % file)
         # Create a new file locally
@@ -127,12 +127,12 @@ def handle_file(log, ftp, file, currdate):
         
     
 if __name__ == '__main__':
-    ''' '''   
-    ''' singleton = ApplicationSingleton('Global\\01a05434-a665-43f2-950f-1e584497a17d') '''
+    
+    # singleton = ApplicationSingleton('Global\\01a05434-a665-43f2-950f-1e584497a17d') '''
     try:
-        '''if not singleton.aquire():
-            print("uvftp already running, exiting...")
-            sys.exit(ExitStatus.Running) '''
+        # if not singleton.aquire():
+        #    print("uvftp already running, exiting...")
+        #    sys.exit(ExitStatus.Running)
 
         log = uvsync_log.create_log("uvftp")                                   
         exit_status = main(log)    
@@ -140,5 +140,5 @@ if __name__ == '__main__':
 
     except Exception as ex:            
         print(str(ex))
-    '''finally:
-        singleton.release() '''
+    # finally:
+    #    singleton.release()

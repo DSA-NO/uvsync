@@ -7,10 +7,10 @@ from shutil import move
 _log = logging.getLogger("uvsync")
 
 def store(ctx, connection_string):
-    '''
-    Function used to read and store data in downloaded UV log files for a speciffic instrument.
-    The instrument and station info is stored in the ctx (UVSyncContext) parameter
-    '''          
+    
+    # Function used to read and store data in downloaded UV log files for a speciffic instrument.
+    # The instrument and station info is stored in the ctx (UVSyncContext) parameter
+    
     connection = None
 
     try:        
@@ -51,9 +51,9 @@ def store(ctx, connection_string):
             connection.close()
 
 def store_file(connection, fd, ctx):
-    ''' 
-    Function used to read and store a speciffic UV log file
-    '''
+    
+    # Function used to read and store a speciffic UV log file
+    
     line_count = 0
 
     # Read the csv file line by line
@@ -82,9 +82,9 @@ def store_file(connection, fd, ctx):
     _log.info("A total of %d lines processed" % (line_count-1))
 
 def store_file_fast(connection, fd, ctx):
-    ''' 
-    Function used to read and store a speciffic UV log file using batch insert for speed
-    '''
+    
+    # Function used to read and store a speciffic UV log file using batch insert for speed
+    
     # Cache list to preload parameters into memory
     sqlparams = []
 

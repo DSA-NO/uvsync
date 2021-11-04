@@ -3,5 +3,7 @@
 import logging
 
 def fetch(ctx):    
-    ''' Not implemented '''
+
+    # Not implemented
+    
     pass    

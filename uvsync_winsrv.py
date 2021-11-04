@@ -10,16 +10,16 @@ from uvsync_win32 import get_registry_value
 _registry_path = r"SOFTWARE\uvsync"
 
 class UVSyncWinSrv(WinSrv):
-    ''' '''
+    
     _svc_name_ = "UVSync"
     _svc_display_name_ = "UVSync service"
     _svc_description_ = "Synchronization of UVNet station data"
 
     def start(self):
-        ''' 
-        Executed when the service is started.
-        Reading parameters from registry
-        '''
+    
+        # Executed when the service is started.
+        # Reading parameters from registry
+    
         d = get_registry_value(_registry_path, "bindir")
         if d is None:
             servicemanager.LogMsg(servicemanager.EVENTLOG_ERROR_TYPE, 0xF000, ('UVSync: Unable to get registry key: bindir', ''))
@@ -35,20 +35,20 @@ class UVSyncWinSrv(WinSrv):
         self.isrunning = True
         servicemanager.LogMsg(servicemanager.EVENTLOG_INFORMATION_TYPE, 0xF000, ('UVSync starting', ''))
 
-    def stop(self):
-        ''' 
-        Executed when the service is stopped.
-        Indicate that the sync loop should stop
-        '''
+    def stop(self):    
+    
+        # Executed when the service is stopped.
+        # Indicate that the sync loop should stop
+    
         servicemanager.LogMsg(servicemanager.EVENTLOG_INFORMATION_TYPE, 0xF000, ('UVSync stopping', ''))
         self.isrunning = False
 
     def main(self):
-        ''' 
-        The service main function.
-        Run uvftp.py and uvsync.py repeatedly whenever 'sync_frequency' seconds has passed.
-        Default value for sync_frequency is 1 hour
-        '''
+    
+        # The service main function.
+        # Run uvftp.py and uvsync.py repeatedly whenever 'sync_frequency' seconds has passed.
+        # Default value for sync_frequency is 1 hour
+    
         try:
             while self.isrunning:
                 # Start timer
@@ -96,5 +96,5 @@ class UVSyncWinSrv(WinSrv):
                 servicemanager.LogMsg(servicemanager.EVENTLOG_ERROR_TYPE, 0xF000, ('UVSync exception: ' + str(sys.exc_info()), ''))
 
 if __name__ == '__main__':
-    ''' '''
+    
     UVSyncWinSrv.parse_command_line()

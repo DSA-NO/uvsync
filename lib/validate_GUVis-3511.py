@@ -7,15 +7,15 @@ from shutil import move
 _log = logging.getLogger("uvsync")
 
 class UVSyncValidateGUVis3511Exception(Exception):
-    ''' '''
+    
     pass
 
 def validate(ctx):
-    '''
-    Function used to validate data in downloaded UV log files for a speciffic instrument.
-    The instrument and station info is stored in the ctx (UVSyncContext) parameter.
-    See validate_GUVis-3511_bs.py for more comments
-    '''          
+    
+    # Function used to validate data in downloaded UV log files for a speciffic instrument.
+    # The instrument and station info is stored in the ctx (UVSyncContext) parameter.
+    # See validate_GUVis-3511_bs.py for more comments
+    
     try:
         work_files = ctx.directory_work.glob(ctx.match_expression)
 
@@ -42,7 +42,7 @@ def validate(ctx):
         _log.error(str(ex), exc_info=True)
 
 def validate_file(fd, ctx):
-    ''' '''
+    
     line_count = 0
 
     csv_reader = csv.reader(fd, delimiter=',')    

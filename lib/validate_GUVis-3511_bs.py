@@ -7,17 +7,17 @@ from shutil import move
 _log = logging.getLogger("uvsync")
 
 class UVSyncValidateGUVis3511BSException(Exception):
-    '''
-    Exception class used to report UVSyncValidateGUVis3511BS speciffic errors
-    '''
+    
+    # Exception class used to report UVSyncValidateGUVis3511BS speciffic errors
+    
     pass
 
 def validate(ctx):
-    '''
-    Function used to validate data in downloaded UV log files for a speciffic instrument.
-    The instrument and station info is stored in the ctx (UVSyncContext) parameter.
-    Invalid files are moved to the 'failed' folder, valid files are added to the ctx.sync_list list
-    '''              
+    
+    # Function used to validate data in downloaded UV log files for a speciffic instrument.
+    # The instrument and station info is stored in the ctx (UVSyncContext) parameter.
+    # Invalid files are moved to the 'failed' folder, valid files are added to the ctx.sync_list list
+    
     try:
         # Get filenames for this instrument
         work_files = ctx.directory_work.glob(ctx.match_expression)
@@ -51,9 +51,9 @@ def validate(ctx):
         _log.error(str(ex), exc_info=True) 
 
 def validate_file(fd, ctx):
-    '''
-    Function used to validate a speciffic UV log file
-    '''
+    
+    # Function used to validate a speciffic UV log file
+    
     line_count = 0
 
     # Read csv file line by line

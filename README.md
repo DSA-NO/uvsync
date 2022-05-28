@@ -14,7 +14,7 @@ connection_string = <Connection string to database>
 
 # På hver logge stasjon:
 
-Tillat kjøring a powershell script, kjør som lokal administrator:
+Tillat kjøring av powershell script, kjør som administrator:
 
 ```$ set-executionpolicy remotesigned```
 

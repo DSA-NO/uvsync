@@ -16,6 +16,6 @@ connection_string = <Connection string to database>
 
 Tillat kjøring a powershell script, kjør som lokal administrator:
 
-*$ set-executionpolicy remotesigned*
+```$ set-executionpolicy remotesigned```
 
 Sett opp oppgave i Oppgaveplanlegger som kjører "uvnetcopy.ps1" hver time

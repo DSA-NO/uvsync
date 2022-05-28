@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import os, sys, importlib
+import sys, importlib
 from pathlib import Path
 
 class UVSyncContextException(Exception):
@@ -57,12 +57,7 @@ class UVSyncContext():
         self.directory_inbox = Path(uvsync_directory) / "inbox"
         self.directory_work = Path(uvsync_directory) / "work"
         self.directory_outbox = Path(uvsync_directory) / "outbox"
-        self.directory_failed = Path(uvsync_directory) / "failed"
-
-        os.makedirs(self.directory_inbox, exist_ok = True)
-        os.makedirs(self.directory_work, exist_ok = True)
-        os.makedirs(self.directory_outbox, exist_ok = True)
-        os.makedirs(self.directory_failed, exist_ok = True)
+        self.directory_failed = Path(uvsync_directory) / "failed"        
             
         # List of files to store in the database, this list is filled by the validate module
         self.sync_files = []

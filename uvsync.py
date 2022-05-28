@@ -20,7 +20,7 @@ def main(log):
     connection = None    
 
     try:
-        script_dir = Path( __file__ ).parent.absolute()
+        script_dir = Path(__file__).parent.absolute()
         log.info("Using script directory: %s" % script_dir)         
 
         config_file = script_dir / "config.ini"        

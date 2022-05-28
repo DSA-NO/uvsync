@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import os, logging
+import logging
 from pathlib import Path
 from logging.handlers import RotatingFileHandler
 
@@ -17,7 +17,7 @@ def create_log(name):
     uvlogger = logging.getLogger(name)
 
     # Create logfile path
-    script_dir = Path( __file__ ).parent.absolute()    
+    script_dir = Path(__file__).parent.absolute()    
     logfile = name + ".log"
     logpath = script_dir / logfile    
 

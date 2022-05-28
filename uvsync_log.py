@@ -17,10 +17,9 @@ def create_log(name):
     uvlogger = logging.getLogger(name)
 
     # Create logfile path
-    logdir = os.path.expandvars(r'%PUBLIC%\uvnet')
-    os.makedirs(logdir, exist_ok = True)
+    script_dir = Path( __file__ ).parent.absolute()    
     logfile = name + ".log"
-    logpath = Path(logdir) / logfile
+    logpath = script_dir / logfile    
 
     # Create rotating log
     handler = RotatingFileHandler(logpath, maxBytes=1000000, backupCount=5)

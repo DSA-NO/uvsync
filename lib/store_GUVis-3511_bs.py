@@ -91,7 +91,7 @@ def store_file_fast(connection, fd, ctx):
     line_count = 0
 
     # Read the csv file line by line
-    csv_reader = csv.reader(fd, delimiter=',')
+    csv_reader = csv.reader(fd, delimiter=',')    
 
     for row in csv_reader:
 

@@ -12,8 +12,8 @@ class ExitStatus: Success, Running, Error = range(3)
 
 def main(log):
     
-    # Main function for verifying and storing downloaded UV log files in the database
-        
+    # Main function for verifying and storing downloaded UV log files in the database    
+
     config = None
     connection_string = None
     uvsync_directory = None
@@ -53,9 +53,7 @@ def main(log):
         log.error(str(ex), exc_info=True)
         return ExitStatus.Error    
     
-    try:             
-        log.info("=========== START UVFTP ===========")        
-
+    try:                     
         # List to store active stations from the database
         stations = []
 
@@ -76,16 +74,12 @@ def main(log):
         # Call the 'handle_station' function for each station
         for station in stations:            
             handle_station(log, station, currdate)
-            
-        log.info("=========== END UVFTP ===========")
     
     except Exception as ex:
         log.error(str(ex), exc_info=True)
         return ExitStatus.Error    
     
-    try:                            
-        log.info("=========== START UVSYNC ===========")
-
+    try:                                    
         sync_contexts = []        
 
         # Get all active instruments from the database and store them as a list of contexts
@@ -114,9 +108,7 @@ def main(log):
         # Execute the store function for each instrument
         for ctx in sync_contexts:
             log.info("Storing data for instrument %d|%s for station %s" % (ctx.instrument_id, ctx.instrument_name, ctx.station_name))
-            ctx.store_module.store(ctx, connection_string) # run in parallel
-            
-        log.info("=========== END UVSYNC ===========")
+            ctx.store_module.store(ctx, connection_string) # run in parallel        
     
     except UVSyncContextException as ex:
         log.error(str(ex))
@@ -197,10 +189,13 @@ if __name__ == '__main__':
     try:
         with pidfile.PIDFile():
             log = uvsync_log.create_log("uvsync")   
-            sys.exit(main(log))    
+            log.info("=========== START UVSYNC ===========")
+            status = main(log)
+            log.info("=========== END UVSYNC ===========")
+            sys.exit(status)
     except pidfile.AlreadyRunningError:
         print('uvsync is already running')
         sys.exit(ExitStatus.Running)
     except Exception as ex:            
         print(str(ex))    
-        sys.exit(ExitStatus.Error)
+        sys.exit(ExitStatus.Error)    

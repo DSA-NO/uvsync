@@ -6,9 +6,9 @@ Installer python moduler: pyodbc, python-pidfile, pywin32
 
 Opprett config.ini
 
-*[General]
-uvsync_directory = <Directory>
-connection_string = <Connection string to database>*
+*[General]*
+*uvsync_directory = <Directory>*
+*connection_string = <Connection string to database>*
 
 # På hver logge stasjon:
 

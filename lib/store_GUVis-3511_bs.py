@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import logging, pyodbc, csv
+import os, logging, pyodbc, csv
 from datetime import datetime
 from shutil import move
 
@@ -26,7 +26,10 @@ def store(ctx, connection_string):
                     store_file_fast(connection, fd, ctx)
                 
                 # Move the stored file from the work directory to the outbox directory
-                fout = ctx.directory_outbox / file.name
+                outdir = ctx.directory_outbox / ctx.station_name
+                if not os.path.exists(outdir):
+                    os.mkdir(outdir)
+                fout = outdir / file.name
                 _log.info("Moving from " + str(file) + " to " + str(fout))
                 move(file, fout)
 

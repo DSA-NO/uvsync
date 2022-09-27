@@ -37,7 +37,7 @@ def main(log):
         uvsync_directory = config['General']['uvsync_directory']
         log.info("Using uvsync directory: " + uvsync_directory)
         
-        # Create uvsync directories if the don't already exists
+        # Create uvsync directories if they don't already exists
         log.info("Creating directories under %s" % uvsync_directory)
         directory_inbox = Path(uvsync_directory) / "inbox"
         directory_work = Path(uvsync_directory) / "work"

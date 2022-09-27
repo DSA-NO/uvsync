@@ -25,6 +25,7 @@ class UVSyncContext():
             raise UVSyncContextException("Missing label for station")
         self.station_name = instrument.station_name
         self.principal = instrument.principal        
+        self.channel_count = instrument.channel_count
 
         if not instrument.fetch_module:
             raise UVSyncContextException("Missing fetch_module for instrument " + self.instrument_name)

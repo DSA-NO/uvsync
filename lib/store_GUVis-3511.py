@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import os, logging, pyodbc, csv
+import os, re, logging, pyodbc, csv
 from datetime import datetime
 from shutil import move
 
@@ -23,9 +23,11 @@ def store(ctx, connection_string):
                 with file.open() as fd:            
                     store_file_fast(connection, fd, ctx)
                 
-                outdir = ctx.directory_outbox / ctx.station_name
+                file_date = re.sub('GUV_[0-9]*_C_([0-9]*).csv', r'\1', file.name)
+                file_year = '20' + file_date[0] + file_date[1]
+                outdir = ctx.directory_outbox / ctx.station_name / file_year / str(ctx.channel_count)
                 if not os.path.exists(outdir):
-                    os.mkdir(outdir)
+                    os.makedirs(outdir, exist_ok = True)
                 fout = outdir / file.name                
                 _log.info("Moving from " + str(file) + " to " + str(fout))
                 move(file, fout)

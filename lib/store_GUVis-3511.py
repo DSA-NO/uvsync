@@ -25,7 +25,7 @@ def store(ctx, connection_string):
                 
                 file_date = re.sub('GUV_[0-9]*_C_([0-9]*).csv', r'\1', file.name)
                 file_year = '20' + file_date[0] + file_date[1]
-                outdir = ctx.directory_outbox / ctx.station_name / file_year / str(ctx.channel_count)
+                outdir = ctx.directory_outbox / ctx.station_name / file_year
                 if not os.path.exists(outdir):
                     os.makedirs(outdir, exist_ok = True)
                 fout = outdir / file.name                
